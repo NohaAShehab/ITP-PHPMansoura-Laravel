@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+### developer defined controllers
+use App\Http\Controllers\ITIController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,17 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get()
-
-// Route::get("/iti",function(){
-//     return "Hello World from ITI";
-// });
-
-
-// Route::get("/iti",function(){
-//     return "<h1 style='color:red'> Hello World from ITI </h1>";
-// });
-
 Route::get("/iti",function(){
     $myinfo = [
         "name"=>"noha",
@@ -37,26 +31,20 @@ Route::get("/iti",function(){
     return $myinfo;
 });
 
-// Route::get('/hello/{username}', function($username){
-//         return "Hello ${username}";
-// });
 
-
-// use
-use App\Http\Controllers\ITIController;
 Route::get('/hello/{username}', [ITIController::class, 'sayhello']);
-
-use App\Http\Controllers\ProductController;
-use Monolog\Handler\RotatingFileHandler;
-
-Route::get("/products/index", [ProductController::class, "index"]);
-
-
-// Route::get("profile/{username}", function($username){
-
-//     return view("profile", ['username'=>$username]);
-
-// });
-
-use App\Http\Controllers\ProfileController;
 Route::get("profile/{username}", [ProfileController::class, 'getProfile']);
+##################################################################3
+############ Named routes
+Route::get("/products/index", [ProductController::class, "index"])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
+
+
+//class Test{
+//    public  $name ;
+//}
+//
+//$t = new Test();
+//var_dump($t->name);

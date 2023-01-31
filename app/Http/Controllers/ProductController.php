@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -13,64 +14,40 @@ class ProductController extends Controller
         ["name"=>'product4', 'price'=>30, 'instock'=>30, "id"=>4] ,
     ];
     function index(){
-
-//        $product_info = "Sample product";
-        $products_list = [
-            "product1", 'product2', 'product3'
-        ];
-
-        $products_info = [
-            "name"=>'product1', 'price'=>10, 'instock'=>5
-        ];
-
-
-        return view("products/index", $data=
-            ['products'=>$products_list, 'product_info'=>$products_info,
-                'products_details'=>$this->products
-            ]
-
-        );
+        # get data from the database
+        # select * from products;
+        $products = DB::table('products')->get();
+//        dump($products);
+        return view("products.index", $data=['products'=>$products]);
     }
 
     function create(){
         return view('products/create');
     }
     function store(){
-//        dd('Data received');
-        dump('Data received');
-        dump($_POST);
-        ## get data sent from the client to the server --->
-//        dump(request());
-//        dump(request('name'));
-//        dump(request('price'));
-//        dump(request('instock'));
-//        dump(request()->get('name'));
-//        dump(request()->all());
-
-        $product= request()->all();  ## $_POST
-        array_shift($product);
-        array_push($this->products, $product);
-        dump($this->products);
-
+        $product_details = request()->all();  # $_POST
+        array_shift($product_details);  # remove _csrf
+//        dd($product_details);
+        DB::table('products')->insert($product_details);
         return to_route('products.index');
     }
 
     function show($id){
-//        dump($id);
-        # get product details ?
-        $found = false;
-        foreach ($this->products as $product){
-            if ($product['id']==$id) {
-                $found= true;
-                dump($product);
-                break;
-            }
-        }
 
-        if ($found==false){
-//            dump("product not found");
+        # get product
+
+        # select * from products where id = id limit 1;
+        $product = DB::table('products')->where('id', $id)->first();
+
+        if ($product){
+            dump($product);
+
+        }else{
             return abort(404);
         }
+
+
+
     }
 
 }

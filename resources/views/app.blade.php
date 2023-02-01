@@ -12,7 +12,7 @@
 
 
 <div class="container">
-    <div style="background-color: red">
+    <div style="">
         @yield('main_section')
     </div>
 

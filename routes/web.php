@@ -41,6 +41,9 @@ Route::get('/products/create', [ProductController::class, 'create'])->name('prod
 Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
 
+Route::get('/products/delete/{id}',
+    [ProductController::class, 'destory'])->name('products.destroy');
+
 
 //class Test{
 //    public  $name ;

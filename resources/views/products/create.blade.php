@@ -2,6 +2,19 @@
 @section('title')  Add new Product @endsection
 
 @section('content')
+
+
+    @if ($errors->any())
+        @dump($errors)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <h1> Add new Product </h1>
 
 {{--    <form class="form" action="/products/store"  method="POST">--}}
@@ -10,7 +23,7 @@
         @csrf
         <div class="mb-3">
             <label class="form-label">Name</label>
-            <input type="text" name="name" class="form-control">
+            <input type="text" name="name" required class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">Price</label>

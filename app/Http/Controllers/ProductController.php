@@ -17,6 +17,14 @@ class ProductController extends Controller
         return view('products/create');
     }
     function store(){
+        request()->validate([
+            'name'=>'required|min:5',
+            'price'=>'min:10'
+        ],
+        [
+            'name.required'=>'custom'
+        ]);
+
         $product_details = request()->all();  # $_POST
         array_shift($product_details);  # remove _csrf
         $product = new Product();
@@ -56,7 +64,6 @@ class ProductController extends Controller
 
     function edit($id){
         $product = Product::findOrFail($id);
-
         return view('products.edit', $data=['product'=>$product]);
     }
 

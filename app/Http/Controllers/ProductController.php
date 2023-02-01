@@ -19,7 +19,8 @@ class ProductController extends Controller
     function store(){
         request()->validate([
             'name'=>'required|min:5',
-            'price'=>'min:10'
+            'price'=>'required',
+            'instock'=>'required'
         ],
         [
             'name.required'=>'custom'

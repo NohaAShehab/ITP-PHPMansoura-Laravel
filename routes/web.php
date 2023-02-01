@@ -45,9 +45,8 @@ Route::get('/products/delete/{id}',
     [ProductController::class, 'destory'])->name('products.destroy');
 
 
-//class Test{
-//    public  $name ;
-//}
-//
-//$t = new Test();
-//var_dump($t->name);
+Route::get('/products/edit/{id}',
+    [ProductController::class, 'edit'])->name('products.edit');
+
+Route::post('/products/update/{id}',
+    [ProductController::class, 'update'])->name('products.update');

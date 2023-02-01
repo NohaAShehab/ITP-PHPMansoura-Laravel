@@ -42,19 +42,36 @@ class ProductController extends Controller
 
 
     function destory($id){
-        $product = DB::table('products')->where('id', $id);
-        if ($product){
-            $product->delete();
-            return to_route("products.index");
-        }{
-            return abort(404);
-        }
-
-
-
-
-
+//       $product = Product::find($id);
+//       if ($product){
+//           $product->delete();
+//       }
+//
+//       return to_route('products.index');
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return to_route('products.index');
     }
+
+
+    function edit($id){
+        $product = Product::findOrFail($id);
+
+        return view('products.edit', $data=['product'=>$product]);
+    }
+
+
+    function update($id){
+        $product = Product::findOrFail($id);
+        $update_product = request()->all();
+        $product->name = $update_product["name"];
+        $product->price = $update_product["price"];
+        $product->instock = $update_product["instock"];
+        $product->save();
+        return "updated";
+//        return to_route("products.index");
+    }
+
 
 }
 

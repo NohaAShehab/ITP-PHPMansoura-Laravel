@@ -68,8 +68,8 @@ class ProductController extends Controller
         $product->price = $update_product["price"];
         $product->instock = $update_product["instock"];
         $product->save();
-        return "updated";
-//        return to_route("products.index");
+//        return "updated";
+        return to_route("products.index");
     }
 
 

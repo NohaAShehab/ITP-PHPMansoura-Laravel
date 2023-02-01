@@ -5,6 +5,7 @@
     <h1> Edit Product </h1>
     <form class="form" action="{{route("products.update", $product->id)}}"  method="POST">
         @csrf
+        @method('put')
         <div class="mb-3">
             <label class="form-label">Name</label>
             <input type="text" name="name"

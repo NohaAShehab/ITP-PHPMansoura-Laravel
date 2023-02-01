@@ -41,12 +41,12 @@ Route::get('/products/create', [ProductController::class, 'create'])->name('prod
 Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
 
-Route::get('/products/delete/{id}',
-    [ProductController::class, 'destory'])->name('products.destroy');
-
 
 Route::get('/products/edit/{id}',
     [ProductController::class, 'edit'])->name('products.edit');
 
-Route::post('/products/update/{id}',
+Route::delete('/products/delete/{id}',
+    [ProductController::class, 'destory'])->name('products.destroy');
+Route::put('/products/update/{id}',
     [ProductController::class, 'update'])->name('products.update');
+

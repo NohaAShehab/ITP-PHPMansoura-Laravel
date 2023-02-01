@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
+
 class ProductController extends Controller
 {
     /**
@@ -32,88 +33,82 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => 'required|min:5',
-            'price' => 'required',
-            'instock' => 'required'
-        ],
-            [
-                'name.required' => 'custom'
-            ]);
+        $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'instock'=>'required'
+        ]);
 
-        $product_details = request()->all();  # $_POST
-        array_shift($product_details);  # remove _csrf
-        $product = new Product();
-        $product->name = $product_details["name"];
-        $product->price = $product_details["price"];
-        $product->instock = $product_details["instock"];
-        $product->save();
-        return to_route('products.index');
+        ### create new object
+        Product::create($request->all());
+
+//        return 'added';
+        return  to_route('products.index');
+
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
         //
-        $product = Product::findOrFail($id);
-        dump($product);
-        return 'Found';
+
+        dd($product);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($id);
-        return view('products.edit', $data=['product'=>$product]);
+        //
+        return  view('products.edit', $data=['product'=>$product]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
         //
-        $product = Product::findOrFail($id);
-        $update_product = request()->all();
-        $product->name = $update_product["name"];
-        $product->price = $update_product["price"];
-        $product->instock = $update_product["instock"];
-        $product->save();
-//        return "updated";
-        return to_route("products.index");
+        $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'instock'=>'required'
+        ]);
+        $product->update($request->all());
+
+        return to_route('products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
         //
-        $product = Product::findOrFail($id);
+
         $product->delete();
+
         return to_route('products.index');
     }
 }

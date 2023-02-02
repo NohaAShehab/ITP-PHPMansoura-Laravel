@@ -36,6 +36,9 @@ Route::get('/hello/{username}', [ITIController::class, 'sayhello']);
 Route::get("profile/{username}", [ProfileController::class, 'getProfile']);
 ##################################################################3
 ############ Named routes
+//Route::resource('products',ProductController::class)
+//    ->middleware('auth');
+
 Route::resource('products',ProductController::class);
 
 Auth::routes();

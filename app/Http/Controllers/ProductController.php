@@ -6,15 +6,17 @@ use App\Models\Product;
 use  App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
-
-    function  __construct()
-    {
-//        $this->middleware('auth')->only(['update', 'store', 'destroy']);
-        $this->middleware('auth')->except(['index', 'show']);
-    }
+//
+//    function  __construct()
+//    {
+////        $this->middleware('auth')->only(['update', 'store', 'destroy']);
+//        $this->middleware('auth')->except(['index', 'show']);
+//    }
 
     /**
      * Display a listing of the resource.
@@ -23,6 +25,8 @@ class ProductController extends Controller
      */
     public function index()
     {
+//        dd(Auth::user());  # return with user object
+
         $products = Product::all();
         return view("products.index", $data = ['products' => $products]);
     }
@@ -47,8 +51,23 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+
+//        dd($request);
         ### create new object
-        Product::create($request->all());
+        $logged_in_usr  = null;
+//        if (Auth::user()){
+////            $logged_in_usr = Auth::user()->id;
+//            $logged_in_usr = Auth::id();
+//        }
+
+        if (Auth::check()) {
+            $logged_in_usr = Auth::id();
+        }
+
+        $data = $request->all();
+        $data['product_creator'] = $logged_in_usr;
+
+        Product::create($data);
 
         return  to_route('products.index');
 

@@ -17,6 +17,11 @@
 
     <h1> Add new Product </h1>
 
+    @if(auth()->user())
+    <h1> Hello {{auth()->user()->name}}</h1>
+
+    @endif
+
 {{--    <form class="form" action="/products/store"  method="POST">--}}
     @dump(route('products.store'))
     <form class="form" action="{{route('products.store')}}?mm==44"  method="POST">
@@ -25,6 +30,8 @@
             <label class="form-label">Name</label>
             <input type="text" name="name"  class="form-control">
         </div>
+
+{{--        <input type="hidden" name="product_creator" value="{{auth()->user()->id}}" class="form-control">--}}
         <div class="mb-3">
             <label class="form-label">Price</label>
             <input type="number" name='price' class="form-control">

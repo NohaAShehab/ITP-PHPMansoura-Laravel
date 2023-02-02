@@ -14,7 +14,13 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    @can('isAdmin')
+                            <h1 style="color: purple"> You are the Admin </h1>
+                    @elsecan('isUser')
+                            <h1 style="color: green"> You are the User </h1>
+                    @elsecan('isManager')
+                            <h1 style="color: red"> You are the Manager </h1>
+                    @endcan
                 </div>
             </div>
         </div>

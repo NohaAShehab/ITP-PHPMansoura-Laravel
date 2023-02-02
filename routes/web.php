@@ -37,3 +37,7 @@ Route::get("profile/{username}", [ProfileController::class, 'getProfile']);
 ##################################################################3
 ############ Named routes
 Route::resource('products',ProductController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

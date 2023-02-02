@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layouts.app')
 @section('title')  Add new Product @endsection
 
 @section('content')

@@ -1,7 +1,8 @@
-@extends('app')
+@extends('layouts.app')
 @section('pagetitle') Products index @endsection
 
 @section('content')
+    <div class="container">
     <h1> Products index home page </h1>
     <p style="text-align: center"> <a
             class="btn btn-success"
@@ -34,7 +35,7 @@
         @endforeach
     </table>
 
-
+    </div>
 
 
 

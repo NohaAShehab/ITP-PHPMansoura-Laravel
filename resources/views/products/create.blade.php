@@ -20,7 +20,7 @@
 {{--    <form class="form" action="/products/store"  method="POST">--}}
     @dump(route('products.store'))
     <form class="form" action="{{route('products.store')}}?mm==44"  method="POST">
-{{--        @csrf--}}
+        @csrf
         <div class="mb-3">
             <label class="form-label">Name</label>
             <input type="text" name="name"  class="form-control">

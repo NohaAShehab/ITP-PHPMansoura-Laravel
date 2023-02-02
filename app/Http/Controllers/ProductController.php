@@ -9,6 +9,13 @@ use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
+
+    function  __construct()
+    {
+//        $this->middleware('auth')->only(['update', 'store', 'destroy']);
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *

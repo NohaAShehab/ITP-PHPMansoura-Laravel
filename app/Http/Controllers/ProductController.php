@@ -7,6 +7,7 @@ use  App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Support\Facades\Auth;
+use League\CommonMark\Node\Inline\AbstractInline;
 
 
 class ProductController extends Controller
@@ -95,7 +96,13 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
-        return  view('products.edit', $data=['product'=>$product]);
+        if (Auth::user()->can('productOwner', $product)){
+            return  view('products.edit', $data=['product'=>$product]);
+
+        }else{
+            return abort(401);
+        }
+
     }
 
     /**
@@ -113,6 +120,7 @@ class ProductController extends Controller
             'price'=>'required',
             'instock'=>'required'
         ]);
+
         $product->update($request->all());
 
         return to_route('products.index');

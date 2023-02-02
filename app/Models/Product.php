@@ -9,6 +9,6 @@ class Product extends Model
 {
     use HasFactory;  # generate dump data
 
-    protected $fillable =['name','price', 'instock'];
+    protected $fillable =['name','price', 'instock', 'category_id'];
 //    protected $guarded = ['_token'];
 }

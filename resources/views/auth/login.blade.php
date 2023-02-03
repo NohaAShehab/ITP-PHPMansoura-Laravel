@@ -66,6 +66,10 @@
                         </div>
                     </form>
                 </div>
+
+                <a href='{{route('loginwithgithub')}}' class="btn btn-danger">
+                    {{ __('Login with github ') }}
+                </a>
             </div>
         </div>
     </div>

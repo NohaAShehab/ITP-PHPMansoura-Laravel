@@ -36,8 +36,6 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        //
-
 //        $product = Product::create($request->all());
 //        $user_id = Auth::id();
 //        $product->product_creator = $user_id;
@@ -47,7 +45,6 @@ class ProductController extends Controller
         $product = Product::create($request_info);
 ////        return $product;
         return new ProductResource($product);
-
 //        return Auth::user();
     }
 

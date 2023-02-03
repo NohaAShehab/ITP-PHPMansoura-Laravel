@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
@@ -55,7 +56,9 @@ class ProductPolicy
     {
         //
 
-
+        return $user->id == $product->product_creator
+            ? Response::allow()
+            : Response::deny('You do not own this product.');;
     }
 
     /**

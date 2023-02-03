@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Support\Facades\Auth;
 use League\CommonMark\Node\Inline\AbstractInline;
+use Illuminate\Support\Facades\Gate;
 
 
 class ProductController extends Controller
@@ -96,13 +97,23 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
-        if (Auth::user()->can('productOwner', $product)){
+//        if (Auth::user()->can('productOwner', $product)){
+//            return  view('products.edit', $data=['product'=>$product]);
+//
+//        }else{
+//            return abort(401);
+//        }
+
+        $response = Gate::inspect('update', $product);
+
+        if ($response->allowed()) {
+            // The action is authorized...
             return  view('products.edit', $data=['product'=>$product]);
 
-        }else{
-            return abort(401);
+        } else {
+//            return  abort(401);
+            echo $response->message();
         }
-
     }
 
     /**

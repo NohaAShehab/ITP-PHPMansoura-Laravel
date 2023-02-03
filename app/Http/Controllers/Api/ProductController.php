@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+
+    function __construct(){
+        $this->middleware('auth:sanctum')->only('store', 'update');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,13 +34,21 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         //
-        $product = Product::create($request->all());
 
-//        return $product;
+//        $product = Product::create($request->all());
+//        $user_id = Auth::id();
+//        $product->product_creator = $user_id;
+//        $product->save();
+        $request_info =  $request->all();
+        $request_info["product_creator"]= Auth::id();
+        $product = Product::create($request_info);
+////        return $product;
         return new ProductResource($product);
+
+//        return Auth::user();
     }
 
     /**
